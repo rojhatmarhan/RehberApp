@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using BussinessLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,6 +9,8 @@ namespace App.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        ContactManager manager = new ContactManager();
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -15,7 +18,8 @@ namespace App.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var contacts = manager.GetAll();
+            return View(contacts);
         }
 
         public IActionResult Privacy()
