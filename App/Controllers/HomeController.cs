@@ -22,9 +22,13 @@ namespace App.Controllers
             return View(contacts);
         }
 
-        public IActionResult Privacy()
+        public JsonResult Detail(int id)
         {
-            return View();
+            var contact = manager.GetAll().Where(x => x.ContactId == id).FirstOrDefault();
+            if (contact == null)
+                return Json(null);
+
+            return Json(contact.Details);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -26,10 +26,37 @@
                     <td>@item.LastName</td>
                     <td>@item.Phone</td>
                     <td>
-                        <button class="btn btn-dark btn-sm">Detay</button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#detay" class="btn btn-dark btn-sm detail" onclick="getDetail(@item.ContactId.ToString())" >Detay</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+<div class="modal fade" id="detay" tabindex="-1" aria-labelledby="title" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>This is a vertically centered modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function getDetail(data){
+        fetch("/Home/Detail?id=" + data)
+        .then(res => {
+            console.log(JSON.parse(res));
+        })
+        .catch(err => alert(err.response.body));
+    }
+</script>
