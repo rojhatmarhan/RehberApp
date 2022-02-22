@@ -18,9 +18,9 @@ namespace DataAccessLayer.Concrete.Repositories
             _context.SaveChanges();
         }
 
-        public List<T> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return _context.Set<T>().ToList();
+            return _context.Set<T>();
         }
         public void HardDelete(T p)
         {

@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Concrete.Repositories;
 using EntityLayer.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace BussinessLayer.Concrete
 
         public List<Contact> GetAll()
         {
-            return _repo.GetAll();
+            return _repo.GetAll().Include(x => x.Details).ToList();
         }
 
         public void Add(Contact p)

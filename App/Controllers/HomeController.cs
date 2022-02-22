@@ -1,6 +1,9 @@
 ﻿using App.Models;
 using BussinessLayer.Concrete;
+using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace App.Controllers
@@ -26,7 +29,7 @@ namespace App.Controllers
         {
             var contact = manager.GetAll().Where(x => x.ContactId == id).FirstOrDefault();
             if (contact == null)
-                return Json(null);
+                return Json(new {message = "Bulunamadı !"});
 
             return Json(contact.Details);
         }
