@@ -18,12 +18,13 @@ namespace BussinessLayer.Concrete
             return _repo.GetAll().Include(x => x.Details).ToList();
         }
 
-        public void Add(Contact p)
+        public int Add(Contact p)
         {
             if (p != null)
             {
-                _repo.Insert(p);
+                return _repo.Insert(p);
             }
+            return 0;
         }
 
     }

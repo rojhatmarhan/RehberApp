@@ -28,9 +28,10 @@ namespace DataAccessLayer.Concrete.Repositories
             _context.SaveChanges();
         }
 
-        public void Insert(T p)
+        public int Insert(T p)
         {
-            throw new NotImplementedException();
+            _context.Add(p);
+            return _context.SaveChanges();
         }
 
         public List<T> List(Expression<Func<T, bool>> filter)

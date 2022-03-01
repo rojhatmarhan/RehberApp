@@ -11,7 +11,7 @@ namespace DataAccessLayer.Abstract
     {
         IQueryable<T> GetAll();
         List<T> List(Expression<Func<T, bool>> filter);
-        void Insert(T p);
+        int Insert(T p);
         void Update(T p);
         void Delete(T p);
         void HardDelete(T p);

@@ -1,0 +1,133 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Ekle";
+}
+
+
+<form>
+    <div class="mb-3">
+        <label for="txt_Ad" class="form-label">Ad</label>
+        <input type="text" class="form-control" id="txt_Ad" required>
+    </div>
+    <div class="mb-3">
+        <label for="txt_Soyad" class="form-label">Soyad</label>
+        <input type="text" class="form-control" id="txt_Soyad" required>
+    </div>
+    <div class="mb-3">
+        <label for="txt_Telefon" class="form-label">Telefon</label>
+        <input type="text" class="form-control" id="txt_Telefon" required>
+    </div>
+    <div class="mb-3">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">1. ADRES</th>
+                    <th scope="col">2. ADRES</th>
+                    <th scope="col">UZUNLUK</th>
+                    <th scope="col">KİLO</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td scope="col">
+                        <input type="text" class="form-control" id="ekle_Adres1">
+                    </td>
+                    <td scope="col">
+                        <input type="text" class="form-control" id="ekle_Adres2">
+                    </td>
+                    <td scope="col">
+                        <input type="number" class="form-control" id="ekle_Uzunluk">
+                    </td>
+                    <td scope="col">
+                        <input type="number" class="form-control" id="ekle_Kilo">
+                    </td>
+                    <td scope="col">
+                        <button type="button" onclick="detayEkle()" class="btn btn-primary">+</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <button type="button" onclick="ekle()" class="btn btn-primary">EKLE</button>
+</form>
+
+<script>
+    function ekle(){
+        let ad = document.getElementById('txt_Ad').value;
+        let soyad = document.getElementById('txt_Soyad').value;
+        let telefon = document.getElementById('txt_Telefon').value;
+        var rows = document.getElementsByTagName("table")[0].rows;
+        
+        if(isEmpty(ad))
+            alert('Lütfen Ad alanını doldurunuz');
+        else if(isEmpty(soyad))
+            alert('Lütfen Soyad alanını doldurunuz');
+        else if(isEmpty(telefon))
+            alert('Lütfen Telefon alanını doldurunuz');
+        else if(rows.length == 0)
+            alert('Lütfen Detay alanını doldurunuz');
+        else{
+            let detay = [];
+
+            for(let i = 1; i< rows.length - 1; i++){
+                let tds = rows[i].querySelectorAll('.child');
+                let obj = {adres1: tds[0].innerText, adres2: tds[1].innerText, uzunluk: tds[2].innerText, kilo: tds[3].innerText};
+                detay.push(obj);
+            }
+
+            var data = {ad: ad, soyad: soyad, telefon: telefon, detay: detay};
+            
+            $.ajax({
+            url: "/Ekle/Add",
+            method: "POST",
+            dataType: "json",
+            data: data,
+            success: function(veri){
+                 window.location.href = '/';
+            },
+            error: function(err){
+                console.log(err.responseText);
+            }
+        });
+        }
+    }
+
+    function detayEkle(){
+        let adres1 = document.getElementById('ekle_Adres1').value;
+        let adres2 = document.getElementById('ekle_Adres2').value;
+        let uzunluk = document.getElementById('ekle_Uzunluk').value;
+        let kilo = document.getElementById('ekle_Kilo').value;
+
+        if(isEmpty(adres1))
+            alert('Lütfen 1. Adres alanını doldurunuz');
+        else if(isEmpty(adres2))
+            alert('Lütfen 2. Adres alanını doldurunuz');
+        else if(isEmpty(uzunluk))
+            alert('Lütfen Uzunluk alanını doldurunuz');
+        else if(isEmpty(kilo))
+            alert('Lütfen Kilo alanını doldurunuz');
+        else{
+            let tr  = "<tr class='parent'>";
+                tr += "<td class='child'>   " + adres1   + "</td>";
+                tr += "<td class='child'>   " + adres2   + "</td>";
+                tr += "<td class='child'>   " + uzunluk  + "</td>";
+                tr += "<td class='child'>   " + kilo     + "</td>";
+                tr += "</td>";
+
+            var tbody = document.getElementById('tbody');
+            tbody.innerHTML += tr;
+
+            document.getElementById('ekle_Adres1').value = "";
+            document.getElementById('ekle_Adres2').value = "";
+            document.getElementById('ekle_Uzunluk').value = "";
+            document.getElementById('ekle_Kilo').value = "";
+        }
+    }
+
+    function isEmpty(str) {return (!str || str.length === 0 );}
+
+</script>

@@ -4,17 +4,22 @@
     ViewData["Title"] = "Rehber App";
 }
 
-<div class="text-center">
-    <h1 class="display-4 mb-5">Rehber APP</h1>
-
+<div class="">
+    <div class="mb-5">
+        <p class="display-4 text-center">
+            Rehber APP
+        </p>
+    </div>
+    <div class="d-flex justify-content-end">
+    </div>
     <table class="table table-hover">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">LastName</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Detail</th>
+                <th scope="col">AD</th>
+                <th scope="col">SOYAD</th>
+                <th scope="col">TELEFON</th>
+                <th scope="col">DETAY</th>
             </tr>
         </thead>
         <tbody>
@@ -70,7 +75,7 @@
             success: function(veri){
                 $('#tbody').empty();
                 $('#title').empty();
-                
+
                 let tr = "";
                 console.log(veri);
                 veri.forEach(e => {
